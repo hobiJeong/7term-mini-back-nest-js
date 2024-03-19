@@ -40,7 +40,7 @@ export class BoardDto
   @Exclude()
   deletedAt: Date;
 
-  constructor(boardDto: BoardDto) {
+  constructor(boardDto: Partial<BoardDto> = {}) {
     super();
 
     Object.assign(this, boardDto);
