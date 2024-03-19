@@ -31,6 +31,7 @@ import { FindBoardsResponseDto } from '@src/apis/boards/dto/find-boards-response
 import { ApiFindBoards } from '@src/apis/boards/swagger-decorators/api-find-boards.swagger';
 import { ApiDeleteBoard } from '@src/apis/boards/swagger-decorators/api-delete-board.swagger';
 import { PutUpdateBoardRequestBodyDto } from '@src/apis/boards/dto/put-update-board-request-body.dto';
+import { ApiPutUpdateBoard } from '@src/apis/boards/swagger-decorators/api-put-update-board..swagger';
 
 @ApiTags('board')
 @InternalServerErrorSwaggerBuilder()
@@ -80,6 +81,7 @@ export class BoardsController {
     return this.boardsService.findOneWithUserAndLoveOrNotFound(boardId);
   }
 
+  @ApiPutUpdateBoard('게시글 Put update API')
   @Put(':boardId')
   @UseGuards(JwtAccessTokenGuard)
   @SetResponse(RESPONSE_KEY.Board)
