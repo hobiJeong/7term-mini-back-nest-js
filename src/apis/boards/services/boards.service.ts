@@ -7,6 +7,7 @@ import { BoardDto } from '@src/apis/boards/dto/board.dto';
 import { CreateBoardRequestBodyDto } from '@src/apis/boards/dto/create-board-request-body.dto';
 import { FindBoardsQueryDto } from '@src/apis/boards/dto/find-boards-query.dto';
 import { FindOneBoardResponseDto } from '@src/apis/boards/dto/find-one-board-response.dto';
+import { PutUpdateBoardRequestBodyDto } from '@src/apis/boards/dto/put-update-board-request-body.dto';
 import { BoardRepository } from '@src/apis/boards/repositories/board.repository';
 import { CategoriesService } from '@src/apis/categories/services/categories.service';
 import { Board } from '@src/entities/Board';
@@ -152,6 +153,32 @@ export class BoardsService {
       queryBuilder.offset(skip).limit(pageSize).groupBy('id').getRawMany(),
       queryBuilder.getCount(),
     ]);
+  }
+
+  async update(
+    userId: number,
+    boardId: number,
+    putUpdateBoardRequestBodyDto: PutUpdateBoardRequestBodyDto,
+  ): Promise<BoardDto> {
+    const existBoard = await this.findOneOrNotFound(boardId);
+
+    if (existBoard.userId !== userId) {
+      throw new ForbiddenException("You don't have permission to access it.");
+    }
+
+    const newBoard = this.boardRepository.create({
+      ...existBoard,
+      ...putUpdateBoardRequestBodyDto,
+    });
+
+    await this.boardRepository.update(
+      { id: existBoard.id, userId },
+      {
+        ...newBoard,
+      },
+    );
+
+    return new BoardDto(newBoard);
   }
 
   async delete(userId: number, boardId: number): Promise<UpdateResult> {
