@@ -3,7 +3,7 @@ import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { TokenRepository } from '@src/apis/auth/token/repositories/token.repository';
 import jwtConfig from '@src/core/config/jwt.config';
-import { Token } from '@src/entities/Token';
+import { InsertResult } from 'typeorm';
 
 @Injectable()
 export class TokenService {
@@ -18,12 +18,15 @@ export class TokenService {
     userId: number,
     accessToken: string,
     refreshToken: string,
-  ): Promise<Token> {
-    return this.tokenRepository.save({
-      userId,
-      accessToken,
-      refreshToken,
-    });
+  ): Promise<InsertResult> {
+    return this.tokenRepository.upsert(
+      {
+        userId,
+        accessToken,
+        refreshToken,
+      },
+      ['userId'],
+    );
   }
 
   generateAccessToken(userId: number): string {
