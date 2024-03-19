@@ -4,7 +4,6 @@ import {
   USER_EMAIL_LENGTH,
   USER_LOGIN_ID_LENGTH,
 } from '@src/apis/users/constants/user.constant';
-import { USER_PASSWORD_REGEXP } from '@src/apis/users/constants/user.regexp';
 import { BaseDto } from '@src/common/dto/base.dto';
 import { User } from '@src/entities/User';
 import { Exclude } from 'class-transformer';
@@ -46,10 +45,7 @@ export class UserDto
   })
   loginId: string;
 
-  @ApiProperty({
-    description: '유저 패스워드',
-    pattern: String(USER_PASSWORD_REGEXP),
-  })
+  @Exclude()
   password: string;
 
   @Exclude()
