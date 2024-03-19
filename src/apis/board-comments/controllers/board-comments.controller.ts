@@ -19,6 +19,7 @@ import { FindBoardCommentsQueryDto } from '@src/apis/board-comments/dto/find-boa
 import { FindBoardCommentsResponseDto } from '@src/apis/board-comments/dto/find-board-comments-response.dto';
 import { BoardCommentsService } from '@src/apis/board-comments/services/board-comments.service';
 import { ApiCreateBoardComment } from '@src/apis/board-comments/swagger-decorators/api-create-board-comment.swagger';
+import { ApiDeleteBoardComment } from '@src/apis/board-comments/swagger-decorators/api-delete-board-comment.swagger';
 import { ApiFindBoardComments } from '@src/apis/board-comments/swagger-decorators/api-find-board-comments.swagger';
 import { User } from '@src/common/decorators/user.decorator';
 import { InternalServerErrorSwaggerBuilder } from '@src/common/dto/internal-server-error.builder';
@@ -69,6 +70,7 @@ export class BoardCommentsController {
     ];
   }
 
+  @ApiDeleteBoardComment('댓글 삭제 API')
   @Delete(':boardCommentId')
   @UseGuards(JwtAccessTokenGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
