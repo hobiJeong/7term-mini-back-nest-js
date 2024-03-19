@@ -28,6 +28,7 @@ import { ResponseType } from '@src/interceptors/response-transformer-interceptor
 import { FindOneBoardResponseDto } from '@src/apis/boards/dto/find-one-board-response.dto';
 import { FindBoardsResponseDto } from '@src/apis/boards/dto/find-boards-response.dto';
 import { ApiFindBoards } from '@src/apis/boards/swagger-decorators/api-find-boards.swagger';
+import { ApiDeleteBoard } from '@src/apis/boards/swagger-decorators/api-delete-board.swagger';
 
 @ApiTags('board')
 @InternalServerErrorSwaggerBuilder()
@@ -77,7 +78,9 @@ export class BoardsController {
     return this.boardsService.findOneWithUserAndLoveOrNotFound(boardId);
   }
 
+  @ApiDeleteBoard('게시글 삭제 API')
   @Delete(':boardId')
+  @UseGuards(JwtAccessTokenGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   async delete(
     @User() user: Payload,
