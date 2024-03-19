@@ -1,0 +1,10 @@
+import { HttpStatus } from '@nestjs/common';
+
+export enum COMMON_ERROR_HTTP_STATUS_CODE {
+  BAD_REQUEST = HttpStatus.BAD_REQUEST,
+  UNAUTHORIZED = HttpStatus.UNAUTHORIZED,
+  FORBIDDEN = HttpStatus.FORBIDDEN,
+  NOT_FOUND = HttpStatus.NOT_FOUND,
+  CONFLICT = HttpStatus.CONFLICT,
+  INTERNAL_SERVER_ERROR = HttpStatus.INTERNAL_SERVER_ERROR,
+}

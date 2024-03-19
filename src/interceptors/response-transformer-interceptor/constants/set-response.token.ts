@@ -1,0 +1,1 @@
+export const SET_RESPONSE_TOKEN = Symbol('SET_RESPONSE_TOKEN');

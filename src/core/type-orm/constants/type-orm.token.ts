@@ -1,0 +1,3 @@
+export const TYPE_ORM_EX_CUSTOM_REPOSITORY = Symbol(
+  'TYPE_ORM_EX_CUSTOM_REPOSITORY',
+);
