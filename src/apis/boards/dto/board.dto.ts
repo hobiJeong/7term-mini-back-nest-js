@@ -38,7 +38,7 @@ export class BoardDto
   content: string;
 
   @Exclude()
-  deletedAt: Date;
+  deletedAt: Date | null;
 
   constructor(boardDto: Partial<BoardDto> = {}) {
     super();

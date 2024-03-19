@@ -32,7 +32,7 @@ export class BoardCommentDto
   content: string;
 
   @Exclude()
-  deletedAt: Date;
+  deletedAt: Date | null;
 
   constructor(boardCommentDto: Partial<BoardCommentDto> = {}) {
     super();
