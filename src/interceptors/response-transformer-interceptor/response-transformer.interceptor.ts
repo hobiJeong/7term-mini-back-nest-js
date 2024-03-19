@@ -23,7 +23,7 @@ export class ResponseTransformerInterceptor implements NestInterceptor {
           context.getHandler(),
         );
 
-        return { [key]: data };
+        return key ? { [key]: data } : data;
       }),
     );
   }
