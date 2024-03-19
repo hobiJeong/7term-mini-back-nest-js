@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { BaseDto } from '@src/common/dto/base.dto';
 import { Board } from '@src/entities/Board';
+import { Exclude } from 'class-transformer';
 
 export class BoardDto
   extends BaseDto
@@ -32,9 +33,16 @@ export class BoardDto
 
   @ApiProperty({
     description: '게시글 본문',
-    minimum: 1,
+    minLength: 1,
   })
   content: string;
 
+  @Exclude()
   deletedAt: Date;
+
+  constructor(boardDto: BoardDto) {
+    super();
+
+    Object.assign(this, boardDto);
+  }
 }
