@@ -1,7 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Post,
   Query,
@@ -72,5 +75,14 @@ export class BoardsController {
     @Param('boardId', ParsePositiveIntPipe) boardId: number,
   ): Promise<FindOneBoardResponseDto> {
     return this.boardsService.findOneWithUserAndLoveOrNotFound(boardId);
+  }
+
+  @Delete(':boardId')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async delete(
+    @User() user: Payload,
+    @Param('boardId', ParsePositiveIntPipe) boardId: number,
+  ): Promise<number> {
+    return (await this.boardsService.delete(user.id, boardId)).affected;
   }
 }
