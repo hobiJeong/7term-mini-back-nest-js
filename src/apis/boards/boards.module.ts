@@ -14,5 +14,6 @@ import { HelpersModule } from '@src/helpers/helpers.module';
   ],
   controllers: [BoardsController],
   providers: [BoardsService],
+  exports: [BoardsService],
 })
 export class BoardsModule {}
