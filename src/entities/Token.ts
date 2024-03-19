@@ -9,6 +9,7 @@ import {
 import { User } from './User';
 
 @Index('FK_token_user_id', ['userId'], {})
+@Index('UQ_token_user_id', ['userId'], { unique: true })
 @Entity('token')
 export class Token {
   @PrimaryGeneratedColumn({
@@ -19,7 +20,12 @@ export class Token {
   })
   id: number;
 
-  @Column('int', { name: 'user_id', comment: '유저 고유 ID', unsigned: true })
+  @Column('int', {
+    name: 'user_id',
+    comment: '유저 고유 ID',
+    unsigned: true,
+    unique: true,
+  })
   userId: number;
 
   @Column('varchar', {

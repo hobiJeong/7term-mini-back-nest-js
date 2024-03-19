@@ -39,6 +39,12 @@ export class Token1710583945249 implements MigrationInterface {
             onDelete: 'CASCADE',
           },
         ],
+        uniques: [
+          {
+            name: 'UQ_token_user_id',
+            columnNames: ['user_id'],
+          },
+        ],
       }),
     );
 
