@@ -3,7 +3,7 @@ import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { TokenRepository } from '@src/apis/auth/token/repositories/token.repository';
 import jwtConfig from '@src/core/config/jwt.config';
-import { InsertResult } from 'typeorm';
+import { DeleteResult, InsertResult } from 'typeorm';
 
 @Injectable()
 export class TokenService {
@@ -38,5 +38,9 @@ export class TokenService {
       { id: userId },
       { secret: this.config.jwtRefreshTokenSecret },
     );
+  }
+
+  deleteToken(userId: number): Promise<DeleteResult> {
+    return this.tokenRepository.delete({ userId });
   }
 }
