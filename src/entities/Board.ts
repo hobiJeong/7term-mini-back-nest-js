@@ -56,6 +56,7 @@ export class Board {
   updatedAt: Date;
 
   @DeleteDateColumn({
+    name: 'deleted_at',
     type: 'timestamp',
     nullable: true,
     comment: '삭제 일자',
