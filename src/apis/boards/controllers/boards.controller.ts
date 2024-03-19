@@ -46,12 +46,21 @@ export class BoardsController {
   @ApiFindBoards('게시글 전체 조회 API')
   @Get()
   @SetResponse(RESPONSE_KEY.Boards, ResponseType.Pagination)
-  async find(@Query() findBoardsQueryDto: FindBoardsQueryDto) {
+  async find(
+    @Query() findBoardsQueryDto: FindBoardsQueryDto,
+  ): Promise<[FindBoardsResponseDto[], number]> {
     const [boards, totalCount] =
       await this.boardsService.findByPagination(findBoardsQueryDto);
 
     return [
-      boards.map((board) => new FindBoardsResponseDto(board)),
+      boards.map(
+        (board) =>
+          new FindBoardsResponseDto({
+            ...board,
+            boardCommentsCount: Number(board.boardCommentsCount),
+            boardLovesCount: Number(board.boardLovesCount),
+          }),
+      ),
       totalCount,
     ];
   }
