@@ -11,7 +11,7 @@ import { ErrorSwaggerBuilder } from '@src/common/dto/error-swagger.builder';
 
 export const ApiGenerateAccessToken = (summary: string) => {
   return applyDecorators(
-    ApiBearerAuth(),
+    ApiBearerAuth('refresh-token'),
     ApiOperation({
       summary,
     }),
