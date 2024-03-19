@@ -109,7 +109,7 @@ export class BoardCommentsService {
         boardId: existBoardComment.boardId,
       },
       {
-        deletedAt: null,
+        deletedAt: new Date(),
       },
     );
   }
