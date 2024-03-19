@@ -1,10 +1,10 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, OmitType } from '@nestjs/swagger';
 import { BaseDto } from '@src/common/dto/base.dto';
 import { BoardComment } from '@src/entities/BoardComment';
 import { Exclude } from 'class-transformer';
 
 export class BoardCommentDto
-  extends BaseDto
+  extends OmitType(BaseDto, ['updatedAt'])
   implements
     Pick<
       BoardComment,
