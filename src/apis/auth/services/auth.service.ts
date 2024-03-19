@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { SignInResponseDto } from '@src/apis/auth/dto/sign-in-response.dto';
 import { SignInRequestBodyDto } from '@src/apis/auth/dto/sign-in-request-body.dto';
 import { TokenService } from '@src/apis/auth/token/services/token.service';
@@ -44,5 +48,19 @@ export class AuthService {
 
   generateAccessToken(userId: number): string {
     return this.tokenService.generateAccessToken(userId);
+  }
+
+  async signOut(userId: number): Promise<number> {
+    const existUser = await this.usersService.findOneOrNotFound(userId);
+
+    const deleteResult = await this.tokenService.deleteToken(existUser.id);
+
+    if (!deleteResult.affected) {
+      throw new InternalServerErrorException(
+        'Server error occurred during sign out',
+      );
+    }
+
+    return deleteResult.affected;
   }
 }
