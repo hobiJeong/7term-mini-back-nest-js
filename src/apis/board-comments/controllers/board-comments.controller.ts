@@ -1,7 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Post,
   Query,
@@ -64,5 +67,18 @@ export class BoardCommentsController {
       plainToInstance(FindBoardCommentsResponseDto, boardComments),
       totalCount,
     ];
+  }
+
+  @Delete(':boardCommentId')
+  @UseGuards(JwtAccessTokenGuard)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async delete(
+    @User() user: Payload,
+    @Param('boardId', ParsePositiveIntPipe) boardId: number,
+    @Param('boardCommentId', ParsePositiveIntPipe) boardCommentId: number,
+  ): Promise<number> {
+    return (
+      await this.boardCommentsService.delete(user.id, boardId, boardCommentId)
+    ).affected;
   }
 }
