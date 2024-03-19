@@ -7,6 +7,7 @@ import {
   HttpStatus,
   Param,
   Post,
+  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -29,6 +30,7 @@ import { FindOneBoardResponseDto } from '@src/apis/boards/dto/find-one-board-res
 import { FindBoardsResponseDto } from '@src/apis/boards/dto/find-boards-response.dto';
 import { ApiFindBoards } from '@src/apis/boards/swagger-decorators/api-find-boards.swagger';
 import { ApiDeleteBoard } from '@src/apis/boards/swagger-decorators/api-delete-board.swagger';
+import { PutUpdateBoardRequestBodyDto } from '@src/apis/boards/dto/put-update-board-request-body.dto';
 
 @ApiTags('board')
 @InternalServerErrorSwaggerBuilder()
@@ -76,6 +78,21 @@ export class BoardsController {
     @Param('boardId', ParsePositiveIntPipe) boardId: number,
   ): Promise<FindOneBoardResponseDto> {
     return this.boardsService.findOneWithUserAndLoveOrNotFound(boardId);
+  }
+
+  @Put(':boardId')
+  @UseGuards(JwtAccessTokenGuard)
+  @SetResponse(RESPONSE_KEY.Board)
+  putUpdate(
+    @User() user: Payload,
+    @Param('boardId', ParsePositiveIntPipe) boardId: number,
+    @Body() putUpdateBoardRequestBodyDto: PutUpdateBoardRequestBodyDto,
+  ): Promise<BoardDto> {
+    return this.boardsService.update(
+      user.id,
+      boardId,
+      putUpdateBoardRequestBodyDto,
+    );
   }
 
   @ApiDeleteBoard('게시글 삭제 API')
