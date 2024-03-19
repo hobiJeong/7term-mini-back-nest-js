@@ -36,7 +36,11 @@ export class TokenService {
   generateRefreshToken(userId: number): string {
     return this.jwtService.sign(
       { id: userId },
-      { secret: this.config.jwtRefreshTokenSecret },
+      {
+        secret: this.config.jwtRefreshTokenSecret,
+        subject: 'refresh-token',
+        expiresIn: '10d',
+      },
     );
   }
 
