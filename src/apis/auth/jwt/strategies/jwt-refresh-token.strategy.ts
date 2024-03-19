@@ -7,7 +7,7 @@ import jwtConfig from '@src/core/config/jwt.config';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
 @Injectable()
-export class JwtAccessTokenStrategy extends PassportStrategy(
+export class JwtRefreshTokenStrategy extends PassportStrategy(
   Strategy,
   'jwt-refresh',
 ) {
