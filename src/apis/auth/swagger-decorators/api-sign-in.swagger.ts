@@ -21,7 +21,7 @@ export const ApiSignIn = (summary: string) => {
       description: '유저 로그인 API',
       schema: {
         properties: {
-          [RESPONSE_KEY.TOKEN]: {
+          [RESPONSE_KEY.Token]: {
             $ref: getSchemaPath(SignInResponseDto),
           },
         },

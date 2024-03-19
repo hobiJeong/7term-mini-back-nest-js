@@ -15,7 +15,7 @@ export const ApiFindOneUser = (summary: string) => {
       description: '유저 상세 조회',
       schema: {
         properties: {
-          [RESPONSE_KEY.USER]: {
+          [RESPONSE_KEY.User]: {
             $ref: getSchemaPath(UserDto),
           },
         },

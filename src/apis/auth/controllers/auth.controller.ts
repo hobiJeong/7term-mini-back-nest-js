@@ -30,7 +30,7 @@ export class AuthController {
 
   @ApiSignIn('로그인 API')
   @Post('sign-in')
-  @SetResponse(RESPONSE_KEY.TOKEN)
+  @SetResponse(RESPONSE_KEY.Token)
   signIn(
     @Body() signInRequestBodyDto: SignInRequestBodyDto,
   ): Promise<SignInResponseDto> {
@@ -39,7 +39,7 @@ export class AuthController {
 
   @ApiGenerateAccessToken('액세스 토큰 재발급 API')
   @Post('access-token')
-  @SetResponse(RESPONSE_KEY.ACCESS_TOKEN)
+  @SetResponse(RESPONSE_KEY.AccessToken)
   @UseGuards(JwtRefreshTokenGuard)
   generateAccessToken(@User() user: Payload): string {
     return this.authService.generateAccessToken(user.id);

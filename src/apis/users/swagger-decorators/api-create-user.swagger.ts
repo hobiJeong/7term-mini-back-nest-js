@@ -20,7 +20,7 @@ export const ApiCreateUser = (summary: string) => {
       description: '유저 생성 성공',
       schema: {
         properties: {
-          [RESPONSE_KEY.USER]: {
+          [RESPONSE_KEY.User]: {
             $ref: getSchemaPath(UserDto),
           },
         },

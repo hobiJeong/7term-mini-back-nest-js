@@ -22,7 +22,7 @@ export const ApiCreateBoard = (summary: string) => {
       description: '게시글 생성 성공',
       schema: {
         properties: {
-          [RESPONSE_KEY.BOARD]: {
+          [RESPONSE_KEY.Board]: {
             $ref: getSchemaPath(BoardDto),
           },
         },

@@ -30,7 +30,7 @@ export class UsersController {
 
   @ApiCreateUser('유저 생성(회원가입) API')
   @Post()
-  @SetResponse(RESPONSE_KEY.USER)
+  @SetResponse(RESPONSE_KEY.User)
   create(
     @Body() createUserRequestBodyDto: CreateUserRequestBodyDto,
   ): Promise<UserDto> {

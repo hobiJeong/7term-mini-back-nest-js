@@ -19,7 +19,7 @@ export const ApiGenerateAccessToken = (summary: string) => {
       description: '액세스 토큰 재발급 성공',
       schema: {
         properties: {
-          [RESPONSE_KEY.ACCESS_TOKEN]: {
+          [RESPONSE_KEY.AccessToken]: {
             type: 'string',
           },
         },
