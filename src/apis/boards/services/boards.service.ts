@@ -6,6 +6,8 @@ import { FindOneBoardResponseDto } from '@src/apis/boards/dto/find-one-board-res
 import { BoardRepository } from '@src/apis/boards/repositories/board.repository';
 import { CategoriesService } from '@src/apis/categories/services/categories.service';
 import { Board } from '@src/entities/Board';
+import { Category } from '@src/entities/Category';
+import { User } from '@src/entities/User';
 import { QueryBuilderHelper } from '@src/helpers/providers/query-builder.helper';
 
 @Injectable()
@@ -41,6 +43,16 @@ export class BoardsService {
     return new BoardDto(newBoard);
   }
 
+  async findOneOrNotFound(boardId: number): Promise<BoardDto> {
+    const existBoard = await this.boardRepository.findOneBy({ id: boardId });
+
+    if (!existBoard) {
+      throw new NotFoundException("The board doesn't exist.");
+    }
+
+    return new BoardDto(existBoard);
+  }
+
   async findOneWithUserAndLoveOrNotFound(
     boardId: number,
   ): Promise<FindOneBoardResponseDto> {
@@ -70,7 +82,23 @@ export class BoardsService {
     return new FindOneBoardResponseDto(existBoard);
   }
 
-  async findByPagination(findBoardsQueryDto: FindBoardsQueryDto) {
+  async findByPagination(findBoardsQueryDto: FindBoardsQueryDto): Promise<
+    [
+      {
+        id: number;
+        userId: number;
+        categoryId: number;
+        content: string;
+        createdAt: Date;
+        updatedAt: Date;
+        category: Category;
+        boardLovesCount: string;
+        boardCommentsCount: string;
+        user: User;
+      }[],
+      number,
+    ]
+  > {
     const { orderField, sortOrder, page, pageSize, ...filter } =
       findBoardsQueryDto;
 
