@@ -6,7 +6,7 @@ import {
 } from '@nestjs/swagger';
 import { COMMON_ERROR_HTTP_STATUS_CODE } from '@src/common/constants/common-error-http-status-code.enum';
 import { COMMON_ERROR_HTTP_STATUS_MESSAGE } from '@src/common/constants/common-error-http-status-message.enum';
-import { RESPONSE_KEY } from '@src/common/constants/response-key.enum';
+import { RESPONSE_KEY } from '@src/interceptors/response-transformer-interceptor/constants/response-key.enum';
 import { ErrorSwaggerBuilder } from '@src/common/dto/error-swagger.builder';
 
 export const ApiGenerateAccessToken = (summary: string) => {

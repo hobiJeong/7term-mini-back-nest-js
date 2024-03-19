@@ -15,7 +15,7 @@ import { JwtRefreshTokenGuard } from '@src/apis/auth/jwt/guards/jwt-refresh-toke
 import { AuthService } from '@src/apis/auth/services/auth.service';
 import { ApiGenerateAccessToken } from '@src/apis/auth/swagger-decorators/api-generate-access-token.swagger';
 import { ApiSignIn } from '@src/apis/auth/swagger-decorators/api-sign-in.swagger';
-import { RESPONSE_KEY } from '@src/common/constants/response-key.enum';
+import { RESPONSE_KEY } from '@src/interceptors/response-transformer-interceptor/constants/response-key.enum';
 import { User } from '@src/common/decorators/user.decorator';
 import { SetResponse } from '@src/interceptors/response-transformer-interceptor/decorators/set-response.decorator';
 import { JwtAccessTokenGuard } from '@src/apis/auth/jwt/guards/jwt-access-token.guard';

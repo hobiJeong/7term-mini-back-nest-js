@@ -18,7 +18,7 @@ import { UsersService } from '@src/apis/users/services/users.service';
 import { ApiCreateUser } from '@src/apis/users/swagger-decorators/api-create-user.swagger';
 import { ApiDeleteUser } from '@src/apis/users/swagger-decorators/api-delete-user.swagger';
 import { ApiFindOneUser } from '@src/apis/users/swagger-decorators/api-find-one-user.swagger';
-import { RESPONSE_KEY } from '@src/common/constants/response-key.enum';
+import { RESPONSE_KEY } from '@src/interceptors/response-transformer-interceptor/constants/response-key.enum';
 import { User } from '@src/common/decorators/user.decorator';
 import { ParsePositiveIntPipe } from '@src/common/pipes/parse-positive-int.pipe';
 import { SetResponse } from '@src/interceptors/response-transformer-interceptor/decorators/set-response.decorator';
