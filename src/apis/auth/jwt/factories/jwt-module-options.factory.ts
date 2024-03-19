@@ -13,6 +13,10 @@ export class JwtModuleOptionsFactory implements JwtOptionsFactory {
   createJwtOptions(): JwtModuleOptions {
     return {
       secret: this.config.jwtAccessTokenSecret,
+      signOptions: {
+        subject: 'access-token',
+        expiresIn: '1d',
+      },
     };
   }
 }
