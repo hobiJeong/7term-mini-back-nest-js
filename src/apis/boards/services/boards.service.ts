@@ -33,15 +33,13 @@ export class BoardsService {
     userId: number,
     createBoardRequestBodyDto: CreateBoardRequestBodyDto,
   ): Promise<BoardDto> {
-    const { categoryId, content } = createBoardRequestBodyDto;
+    const { categoryId } = createBoardRequestBodyDto;
 
-    const existCategory =
-      await this.categoriesService.findOneOrNotFound(categoryId);
+    await this.categoriesService.findOneOrNotFound(categoryId);
 
     const newBoard = this.boardRepository.create({
       userId,
-      categoryId: existCategory.id,
-      content,
+      ...createBoardRequestBodyDto,
     });
 
     await this.boardRepository.save(newBoard);
@@ -160,11 +158,15 @@ export class BoardsService {
     boardId: number,
     putUpdateBoardRequestBodyDto: PutUpdateBoardRequestBodyDto,
   ): Promise<BoardDto> {
+    const { categoryId } = putUpdateBoardRequestBodyDto;
+
     const existBoard = await this.findOneOrNotFound(boardId);
 
     if (existBoard.userId !== userId) {
       throw new ForbiddenException("You don't have permission to access it.");
     }
+
+    await this.categoriesService.findOneOrNotFound(categoryId);
 
     const newBoard = this.boardRepository.create({
       ...existBoard,
