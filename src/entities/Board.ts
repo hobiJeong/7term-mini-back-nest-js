@@ -11,6 +11,7 @@ import {
 import { Category } from './Category';
 import { User } from './User';
 import { BoardLove } from './BoardLove';
+import { BoardComment } from '@src/entities/BoardComment';
 
 @Index('FK_board_user_id', ['userId'], {})
 @Index('FK_board_category_id', ['categoryId'], {})
@@ -76,6 +77,9 @@ export class Board {
   })
   @JoinColumn([{ name: 'user_id', referencedColumnName: 'id' }])
   user: User;
+
+  @OneToMany(() => BoardComment, (boardComment) => boardComment.board)
+  boardComments: BoardComment[];
 
   @OneToMany(() => BoardLove, (boardLove) => boardLove.board)
   boardLoves: BoardLove[];

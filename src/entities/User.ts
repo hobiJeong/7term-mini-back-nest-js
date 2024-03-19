@@ -9,6 +9,7 @@ import {
 import { Board } from './Board';
 import { BoardLove } from './BoardLove';
 import { Token } from './Token';
+import { BoardComment } from '@src/entities/BoardComment';
 
 @Index('UQ_user_login_id', ['loginId'], { unique: true })
 @Index('UQ_user_nickname', ['nickname'], { unique: true })
@@ -81,6 +82,9 @@ export class User {
 
   @OneToMany(() => BoardLove, (boardLove) => boardLove.user)
   boardLoves: BoardLove[];
+
+  @OneToMany(() => BoardComment, (boardComment) => boardComment.user)
+  boardComments: BoardComment[];
 
   @OneToMany(() => Token, (token) => token.user)
   tokens: Token[];

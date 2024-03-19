@@ -30,6 +30,24 @@ export class BoardComment1710582578941 implements MigrationInterface {
           generateCreatedAtColumn(),
           generateDeletedAtColumn(),
         ],
+        foreignKeys: [
+          {
+            name: 'FK_board_comment_board_id',
+            columnNames: ['board_id'],
+            referencedColumnNames: ['id'],
+            referencedTableName: 'board',
+            onUpdate: 'CASCADE',
+            onDelete: 'CASCADE',
+          },
+          {
+            name: 'FK_board_comment_user_id',
+            columnNames: ['user_id'],
+            referencedColumnNames: ['id'],
+            referencedTableName: 'user',
+            onUpdate: 'CASCADE',
+            onDelete: 'CASCADE',
+          },
+        ],
       }),
     );
 

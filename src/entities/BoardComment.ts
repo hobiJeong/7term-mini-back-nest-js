@@ -1,7 +1,11 @@
+import { Board } from '@src/entities/Board';
+import { User } from '@src/entities/User';
 import {
   Column,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -40,9 +44,24 @@ export class BoardComment {
   createdAt: Date;
 
   @DeleteDateColumn({
+    name: 'deleted_at',
     type: 'timestamp',
     nullable: true,
     comment: '삭제 일자',
   })
   deletedAt: Date | null;
+
+  @ManyToOne(() => Board, (board) => board.boardComments, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn([{ name: 'board_id', referencedColumnName: 'id' }])
+  board: Board;
+
+  @ManyToOne(() => User, (user) => user.boardComments, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn([{ name: 'user_id', referencedColumnName: 'id' }])
+  user: User;
 }
