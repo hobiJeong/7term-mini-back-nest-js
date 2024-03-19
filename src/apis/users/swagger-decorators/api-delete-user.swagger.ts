@@ -1,5 +1,9 @@
 import { applyDecorators } from '@nestjs/common';
-import { ApiNoContentResponse, ApiOperation } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiNoContentResponse,
+  ApiOperation,
+} from '@nestjs/swagger';
 import { COMMON_ERROR_HTTP_STATUS_CODE } from '@src/common/constants/common-error-http-status-code.enum';
 import { COMMON_ERROR_HTTP_STATUS_MESSAGE } from '@src/common/constants/common-error-http-status-message.enum';
 import { ErrorSwaggerBuilder } from '@src/common/dto/error-swagger.builder';
@@ -10,6 +14,7 @@ export const ApiDeleteUser = (summary: string): MethodDecorator => {
     ApiOperation({
       summary,
     }),
+    ApiBearerAuth('access-token'),
     ApiNoContentResponse({
       description: '유저 삭제 성공',
     }),
