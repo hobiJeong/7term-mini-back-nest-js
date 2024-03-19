@@ -30,6 +30,7 @@ export class Category1710573964953 implements MigrationInterface {
           generateCreatedAtColumn(),
           generateUpdatedAtColumn(),
         ],
+        uniques: [{ name: 'UQ_category_name', columnNames: ['name'] }],
       }),
     );
 
