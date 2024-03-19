@@ -50,7 +50,7 @@ export class UsersService {
     const existUser = await this.findOneOrNotFound(userId);
 
     if (myId === existUser.id) {
-      throw new ForbiddenException('Access is prohibited to anyone but you.');
+      throw new ForbiddenException("You don't have permission to access it.");
     }
 
     const updateResult = await this.userRepository.update(
