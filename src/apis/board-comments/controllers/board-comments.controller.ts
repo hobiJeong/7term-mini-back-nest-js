@@ -49,5 +49,10 @@ export class BoardCommentsController {
   find(
     @Param('boardId', ParsePositiveIntPipe) boardId: number,
     @Query() findBoardCommentsQueryDto: FindBoardCommentsQueryDto,
-  ) {}
+  ) {
+    return this.boardCommentsService.findByPagination(
+      boardId,
+      findBoardCommentsQueryDto,
+    );
+  }
 }
