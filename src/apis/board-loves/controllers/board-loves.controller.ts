@@ -1,5 +1,6 @@
 import {
   Controller,
+  Delete,
   HttpCode,
   HttpStatus,
   Param,
@@ -31,5 +32,15 @@ export class BoardLovesController {
     @User() user: Payload,
   ): Promise<Pick<BoardLove, 'userId' | 'boardId'>> {
     return this.boardLovesService.create(user.id, boardId);
+  }
+
+  @Delete()
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @UseGuards(JwtAccessTokenGuard)
+  delete(
+    @Param('boardId', ParsePositiveIntPipe) boardId: number,
+    @User() user: Payload,
+  ) {
+    return this.boardLovesService.delete(user.id, boardId);
   }
 }

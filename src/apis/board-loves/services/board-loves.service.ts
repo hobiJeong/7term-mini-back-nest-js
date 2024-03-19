@@ -33,4 +33,6 @@ export class BoardLovesService {
       { reload: false },
     );
   }
+
+  async delete(userId: number, boardId: number) {}
 }
