@@ -4,7 +4,7 @@ import { COMMON_ERROR_HTTP_STATUS_CODE } from '@src/common/constants/common-erro
 import { COMMON_ERROR_HTTP_STATUS_MESSAGE } from '@src/common/constants/common-error-http-status-message.enum';
 import { ErrorSwaggerBuilder } from '@src/common/dto/error-swagger.builder';
 
-export const ApiSignOut = (summary: string) => {
+export const ApiSignOut = (summary: string): MethodDecorator => {
   return applyDecorators(
     ApiOperation({
       summary,

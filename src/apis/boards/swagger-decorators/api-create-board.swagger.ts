@@ -12,7 +12,7 @@ import { COMMON_ERROR_HTTP_STATUS_MESSAGE } from '@src/common/constants/common-e
 import { RESPONSE_KEY } from '@src/interceptors/response-transformer-interceptor/constants/response-key.enum';
 import { ErrorSwaggerBuilder } from '@src/common/dto/error-swagger.builder';
 
-export const ApiCreateBoard = (summary: string) => {
+export const ApiCreateBoard = (summary: string): MethodDecorator => {
   return applyDecorators(
     ApiOperation({
       summary,

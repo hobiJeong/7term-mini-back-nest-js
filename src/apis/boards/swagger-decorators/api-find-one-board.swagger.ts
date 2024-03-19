@@ -11,7 +11,7 @@ import { COMMON_ERROR_HTTP_STATUS_MESSAGE } from '@src/common/constants/common-e
 import { ErrorSwaggerBuilder } from '@src/common/dto/error-swagger.builder';
 import { RESPONSE_KEY } from '@src/interceptors/response-transformer-interceptor/constants/response-key.enum';
 
-export const ApiFindOneBoard = (summary: string) => {
+export const ApiFindOneBoard = (summary: string): MethodDecorator => {
   return applyDecorators(
     ApiOperation({ summary }),
     ApiOkResponse({

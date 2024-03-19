@@ -5,7 +5,7 @@ import { COMMON_ERROR_HTTP_STATUS_MESSAGE } from '@src/common/constants/common-e
 import { ErrorSwaggerBuilder } from '@src/common/dto/error-swagger.builder';
 import { InternalServerErrorSwaggerBuilder } from '@src/common/dto/internal-server-error.builder';
 
-export const ApiDeleteUser = (summary: string) => {
+export const ApiDeleteUser = (summary: string): MethodDecorator => {
   return applyDecorators(
     ApiOperation({
       summary,
