@@ -10,7 +10,7 @@ import { BoardLoveRepository } from '@src/apis/board-loves/repositories/board-lo
     TypeOrmExModule.forCustomRepository([BoardLoveRepository]),
     BoardsModule,
   ],
-  providers: [BoardLovesService],
   controllers: [BoardLovesController],
+  providers: [BoardLovesService],
 })
 export class BoardLovesModule {}
