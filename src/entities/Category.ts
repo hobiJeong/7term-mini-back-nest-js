@@ -1,6 +1,13 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Board } from './Board';
 
+@Index('UQ_category_name', ['name'], { unique: true })
 @Entity('category')
 export class Category {
   @PrimaryGeneratedColumn({
@@ -11,7 +18,12 @@ export class Category {
   })
   id: number;
 
-  @Column('varchar', { name: 'name', comment: '카테고리 이름', length: 20 })
+  @Column('varchar', {
+    name: 'name',
+    comment: '카테고리 이름',
+    length: 20,
+    unique: true,
+  })
   name: string;
 
   @Column('timestamp', {
