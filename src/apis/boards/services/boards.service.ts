@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { BoardDto } from '@src/apis/boards/dto/board.dto';
 import { CreateBoardRequestBodyDto } from '@src/apis/boards/dto/create-board-request-body.dto';
 import { FindBoardsQueryDto } from '@src/apis/boards/dto/find-boards-query.dto';
@@ -9,6 +13,7 @@ import { Board } from '@src/entities/Board';
 import { Category } from '@src/entities/Category';
 import { User } from '@src/entities/User';
 import { QueryBuilderHelper } from '@src/helpers/providers/query-builder.helper';
+import { UpdateResult } from 'typeorm';
 
 @Injectable()
 export class BoardsService {
@@ -147,5 +152,23 @@ export class BoardsService {
       queryBuilder.offset(skip).limit(pageSize).groupBy('id').getRawMany(),
       queryBuilder.getCount(),
     ]);
+  }
+
+  async delete(userId: number, boardId: number): Promise<UpdateResult> {
+    const existBoard = await this.findOneOrNotFound(boardId);
+
+    if (existBoard.userId !== userId) {
+      throw new ForbiddenException("You don't have permission to access it.");
+    }
+
+    return this.boardRepository.update(
+      {
+        id: existBoard.id,
+        userId,
+      },
+      {
+        deletedAt: new Date(),
+      },
+    );
   }
 }
