@@ -33,12 +33,9 @@ export class FindBoardsResponseDto extends BoardDto {
   constructor(findBoardsResponseDto: Partial<FindBoardsResponseDto> = {}) {
     super(findBoardsResponseDto);
 
-    const { category, user, boardCommentsCount, boardLovesCount } =
-      findBoardsResponseDto;
+    const { category, user } = findBoardsResponseDto;
 
     this.category = new CategoryDto(category);
     this.user = new UserDto(user);
-    this.boardCommentsCount = Number(boardCommentsCount);
-    this.boardLovesCount = Number(boardLovesCount);
   }
 }
