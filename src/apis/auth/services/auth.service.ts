@@ -30,19 +30,19 @@ export class AuthService {
     const accessToken = this.tokenService.generateAccessToken(existUser.id);
     const refreshToken = this.tokenService.generateRefreshToken(existUser.id);
 
-    const token = await this.tokenService.createToken(
+    await this.tokenService.createToken(
       existUser.id,
       accessToken,
       refreshToken,
     );
 
     return new SignInResponseDto({
-      accessToken: token.accessToken,
-      refreshToken: token.refreshToken,
+      accessToken,
+      refreshToken,
     });
   }
 
-  generateAccessToken(userId: number) {
+  generateAccessToken(userId: number): string {
     return this.tokenService.generateAccessToken(userId);
   }
 }
