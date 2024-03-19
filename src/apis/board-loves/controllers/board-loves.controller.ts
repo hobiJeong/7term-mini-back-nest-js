@@ -37,10 +37,10 @@ export class BoardLovesController {
   @Delete()
   @HttpCode(HttpStatus.NO_CONTENT)
   @UseGuards(JwtAccessTokenGuard)
-  delete(
+  async delete(
     @Param('boardId', ParsePositiveIntPipe) boardId: number,
     @User() user: Payload,
-  ) {
-    return this.boardLovesService.delete(user.id, boardId);
+  ): Promise<number> {
+    return (await this.boardLovesService.delete(user.id, boardId)).affected;
   }
 }
