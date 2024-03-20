@@ -7,4 +7,5 @@ export enum RESPONSE_KEY {
   Comments = 'comments',
   Token = 'token',
   AccessToken = 'accessToken',
+  Category = 'category',
 }
