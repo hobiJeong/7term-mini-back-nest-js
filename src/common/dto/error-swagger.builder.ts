@@ -6,6 +6,7 @@ import { COMMON_ERROR_HTTP_STATUS_MESSAGE } from '@src/common/constants/common-e
 export const ErrorSwaggerBuilder = (
   statusCode: COMMON_ERROR_HTTP_STATUS_CODE,
   error: COMMON_ERROR_HTTP_STATUS_MESSAGE,
+  ...message: string[]
 ): ClassDecorator & MethodDecorator => {
   return applyDecorators(
     ApiResponse({
@@ -14,9 +15,9 @@ export const ErrorSwaggerBuilder = (
         properties: {
           message: {
             type: 'array',
-            description: '에러 메세지',
             items: {
               type: 'string',
+              example: message?.join(', '),
             },
           },
           error: {
