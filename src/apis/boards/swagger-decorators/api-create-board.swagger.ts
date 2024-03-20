@@ -31,6 +31,8 @@ export const ApiCreateBoard = (summary: string): MethodDecorator => {
     ErrorSwaggerBuilder(
       COMMON_ERROR_HTTP_STATUS_CODE.BAD_REQUEST,
       COMMON_ERROR_HTTP_STATUS_MESSAGE.BAD_REQUEST,
+      'badrequest',
+      '왕덕봉',
     ),
     ErrorSwaggerBuilder(
       COMMON_ERROR_HTTP_STATUS_CODE.UNAUTHORIZED,
