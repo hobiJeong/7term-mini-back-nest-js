@@ -1,5 +1,6 @@
 import {
   ForbiddenException,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -7,6 +8,7 @@ import { BoardCommentDto } from '@src/apis/board-comments/dto/board-comment.dto'
 import { CreateBoardCommentRequestBodyDto } from '@src/apis/board-comments/dto/create-board-comment-request-body.dto';
 import { FindBoardCommentsQueryDto } from '@src/apis/board-comments/dto/find-board-comments-query.dto';
 import { BoardCommentRepository } from '@src/apis/board-comments/repositories/board-comment.repository';
+import { IBoardCommentRepository } from '@src/apis/board-comments/repositories/iboard-comment.repository';
 import { BoardsService } from '@src/apis/boards/services/boards.service';
 import { BoardComment } from '@src/entities/BoardComment';
 import { QueryHelper } from '@src/helpers/providers/query.helper';
@@ -20,7 +22,8 @@ export class BoardCommentsService {
   >)[] = ['content'];
 
   constructor(
-    private readonly boardCommentRepository: BoardCommentRepository,
+    @Inject(BoardCommentRepository)
+    private readonly boardCommentRepository: IBoardCommentRepository,
     private readonly boardsService: BoardsService,
     private readonly queryHelper: QueryHelper,
   ) {}
@@ -32,13 +35,11 @@ export class BoardCommentsService {
   ): Promise<BoardCommentDto> {
     const existBoard = await this.boardsService.findOneOrNotFound(boardId);
 
-    const newBoardComment = this.boardCommentRepository.create({
+    const newBoardComment = await this.boardCommentRepository.saveBoard({
       userId,
       boardId: existBoard.id,
       ...createBoardCommentRequestBodyDto,
     });
-
-    await this.boardCommentRepository.save(newBoardComment);
 
     return new BoardCommentDto(newBoardComment);
   }
@@ -54,8 +55,6 @@ export class BoardCommentsService {
 
     const skip = (page - 1) * pageSize;
 
-    filter['boardId'] = existBoard.id;
-
     const where = this.queryHelper.buildWherePropForFind(
       filter,
       this.LIKE_SEARCH_FIELD,
@@ -66,7 +65,7 @@ export class BoardCommentsService {
       sortOrder,
     );
 
-    return this.boardCommentRepository.findAndCount({
+    return this.boardCommentRepository.findByPagination(existBoard.id, {
       where,
       order,
       skip,
@@ -75,12 +74,13 @@ export class BoardCommentsService {
   }
 
   async findOneOrNotFound(boardId: number, boardCommentId: number) {
-    const existBoardComment = await this.boardCommentRepository.findOne({
-      where: {
-        id: boardCommentId,
-        boardId,
-      },
-    });
+    const existBoardComment =
+      await this.boardCommentRepository.findOneBoardComment({
+        where: {
+          id: boardCommentId,
+          boardId,
+        },
+      });
 
     if (!existBoardComment) {
       throw new NotFoundException("The comment doesn't exist.");
@@ -103,14 +103,8 @@ export class BoardCommentsService {
       throw new ForbiddenException("You don't have permission to access it.");
     }
 
-    return this.boardCommentRepository.update(
-      {
-        id: existBoardComment.id,
-        boardId: existBoardComment.boardId,
-      },
-      {
-        deletedAt: new Date(),
-      },
-    );
+    return this.boardCommentRepository.deleteBoardComment({
+      ...existBoardComment,
+    });
   }
 }
