@@ -6,7 +6,7 @@ import { COMMON_ERROR_HTTP_STATUS_MESSAGE } from '@src/common/constants/common-e
 export const ErrorSwaggerBuilder = (
   statusCode: COMMON_ERROR_HTTP_STATUS_CODE,
   error: COMMON_ERROR_HTTP_STATUS_MESSAGE,
-  ...message: string[]
+  message?: string[],
 ): ClassDecorator & MethodDecorator => {
   return applyDecorators(
     ApiResponse({
@@ -14,10 +14,13 @@ export const ErrorSwaggerBuilder = (
       schema: {
         properties: {
           message: {
-            type: 'array',
+            type:
+              statusCode === COMMON_ERROR_HTTP_STATUS_CODE.BAD_REQUEST
+                ? 'array'
+                : 'string',
             items: {
               type: 'string',
-              example: message?.join(', '),
+              example: message ? message?.join(', ') : 'string',
             },
           },
           error: {
