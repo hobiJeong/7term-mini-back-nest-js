@@ -28,6 +28,7 @@ export const ApiGenerateAccessToken = (summary: string): MethodDecorator => {
     ErrorSwaggerBuilder(
       COMMON_ERROR_HTTP_STATUS_CODE.UNAUTHORIZED,
       COMMON_ERROR_HTTP_STATUS_MESSAGE.UNAUTHORIZED,
+      ['abc', 'abd'],
     ),
   );
 };
